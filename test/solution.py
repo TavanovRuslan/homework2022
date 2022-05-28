@@ -1,6 +1,6 @@
 from re import split as spliter
 
-#Берем данные из input.txt
+#Береться данные из input.txt
 with open('input.txt', 'r') as INPUT:
     m = int(INPUT.readline())
     array = []
@@ -8,14 +8,14 @@ with open('input.txt', 'r') as INPUT:
         array.append(INPUT.readline().strip())
 
 
-#Избавимся от дубликатов IP-адресов
+#Избавляются от дубликатов IP-адресов
 SET = set()
 for el in array:
     SET.add(el)
 array = list(SET)
 
 
-#Представим каждый IP-адрес в битовом формате
+#Представляем каждый IP-адрес в битовом формате
 bit_array = []
 for el in array:
     ar = el.split('.')
@@ -29,14 +29,14 @@ for el in array:
     bit_array.append(full_string)
 
 
-#Определим параметр N
+#Определяем параметр N
     for i in range(1,33):
         if 2**(i-1) < len(SET) and 2**i >= len(SET):
             n = i
             break
 
 
-#Определим маску
+#Определяем маску
 bit_mask = (32 - n)*'1' + n*'0'
 mask = str()
 for i in range(4):
@@ -51,18 +51,18 @@ for i in range(4):
 mask = mask[:-1]
 
 
-#Определим IP-сеть
-##Создадим новый массив для нахождения наибольшего IP-адрес
+#Определяем IP-сеть
+##Создаются новый массив для нахождения наибольшего IP-адрес
 new_array = []
 for el in array:
     new_array.append([int(x) for x in el.split('.')])
-##Ищем наибольший IP-адрес
+##Ищеться наибольший IP-адрес
 Max_IP = str()
 new_array.sort()
 for numb in new_array[-1]:
     Max_IP += str(numb) + '.'
 Max_IP = Max_IP[:-1]
-##Вычисляем наименьший сетевой адрес
+##Вычисляется наименьший сетевой адрес
 counter = 0
 reverse_IP = new_array[-1].copy()
 reverse_IP.reverse()
@@ -77,14 +77,14 @@ for i in reverse_IP:
         reverse_IP[1] = i - (2**n - 1)//255
         reverse_IP[0] = reverse_IP[0] - (2**n - 1)%255
         break
-##Получаем IP-сеть
+##Получается IP-сеть
 IP = reverse_IP
 IP.reverse()
 IP = [str(x) for x in IP]
 IP = '.'.join(IP)
 
     
-#Проверяем кода
+#Проверяется кода
 print('IP-адреса: ', array)
 print('IP-адреса в битах: ', bit_array)
 print('Наибольшний IP-адрес: ', Max_IP)
@@ -92,7 +92,7 @@ print('Маска: ', mask)
 print('Сетевой адрес: ', IP)
 
 
-#Выводим в output.txt
+#Выводиться в output.txt
 with open('output.txt', 'w') as OUTPUT:
     OUTPUT.write(IP + '\n')
     OUTPUT.write(mask)
